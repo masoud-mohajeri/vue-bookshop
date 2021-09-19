@@ -1,0 +1,7 @@
+{
+  "name": "vue-ecommerce",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}

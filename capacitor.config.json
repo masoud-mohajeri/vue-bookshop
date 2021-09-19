@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "vue-ecommerce",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
