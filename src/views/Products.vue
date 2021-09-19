@@ -1,12 +1,13 @@
 <template>
-  <ion-page>
+  <ion-page dir="rtl">
     <ion-header>
       <ion-toolbar color="success">
-        <ion-title>Products</ion-title>
+        <ion-title>محصولات</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <h2>Products</h2>
+      <h1>لیست کتاب ها</h1>
+      <ProductCard v-for="(item, index) in fackArray" :key="index" />
     </ion-content>
   </ion-page>
 </template>
@@ -19,8 +20,10 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue";
+import ProductCard from "@/components/ProductCard.vue";
+import { defineComponent } from "@vue/runtime-core";
 
-export default {
+export default defineComponent({
   name: "Products",
   components: {
     IonHeader,
@@ -28,6 +31,12 @@ export default {
     IonTitle,
     IonContent,
     IonPage,
+    ProductCard,
   },
-};
+  setup: () => {
+    const fackArray = [1, 2, 3, 4];
+
+    return { fackArray };
+  },
+});
 </script>
