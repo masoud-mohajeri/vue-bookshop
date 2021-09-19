@@ -1,39 +1,42 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import Tabs from '../views/Tabs.vue'
+import Admin from '@/views/Admin.vue';
+import Home from '@/views/Home.vue';
+import Products from '@/views/Products.vue';
+import ShoppingCard from '@/views/ShoppingCard.vue';
+import Customer from '@/views/Customer.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    redirect: '/tabs/tab1'
+    path: '/admin',
+    component: Admin,
   },
   {
-    path: '/tabs/',
-    component: Tabs,
-    children: [
-      {
-        path: '',
-        redirect: '/tabs/tab1'
-      },
-      {
-        path: 'tab1',
-        component: () => import('@/views/Tab1.vue')
-      },
-      {
-        path: 'tab2',
-        component: () => import('@/views/Tab2.vue')
-      },
-      {
-        path: 'tab3',
-        component: () => import('@/views/Tab3.vue')
-      }
-    ]
-  }
-]
+    path: '/customer',
+    component: Customer,
+  },
+  {
+    path: '/shopping-card',
+    component: ShoppingCard,
+  },
+  {
+    path: '/products',
+    component: Products,
+  },
+  {
+    path: '/',
+    component: Home,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    redirect: '/',
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
