@@ -9,6 +9,7 @@
     <ion-card-content>
       <p>15000 تومان</p>
       <ion-button fill="solid"> افزودن به سبد خرید </ion-button>
+      <ion-button fill="outline" color="success"> مشاهده جزعیات </ion-button>
     </ion-card-content>
   </ion-card>
 </template>
@@ -47,7 +48,7 @@ export default defineComponent({
 }
 
 .body {
-  height: 480px;
+  height: 520px;
   width: 240px;
   display: inline-block;
 }
