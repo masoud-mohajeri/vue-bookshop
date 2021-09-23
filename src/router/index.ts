@@ -5,6 +5,7 @@ import Home from '@/views/Home.vue';
 import Products from '@/views/Products.vue';
 import ShoppingCard from '@/views/ShoppingCard.vue';
 import Customer from '@/views/Customer.vue';
+import Login from '@/views/Login.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -22,6 +23,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/products',
     component: Products,
+  },
+  {
+    path: '/login',
+    component: Login,
   },
   {
     path: '/',

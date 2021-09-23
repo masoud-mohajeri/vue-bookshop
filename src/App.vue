@@ -1,5 +1,5 @@
 <template>
-  <ion-app>
+  <ion-app dir="rtl">
     <ion-router-outlet />
   </ion-app>
 </template>
