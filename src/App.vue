@@ -33,5 +33,6 @@ export default defineComponent({
 
 * {
   font-family: "Vazir", "Roboto", sans-serif;
+  --ion-font-family: "Vazir", "Roboto", sans-serif;
 }
 </style>
