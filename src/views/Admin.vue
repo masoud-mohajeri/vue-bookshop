@@ -67,3 +67,11 @@ export default defineComponent({
   },
 });
 </script>
+
+
+<style scoped>
+.body {
+  width: 100%;
+  margin: 0;
+}
+</style>
