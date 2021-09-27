@@ -108,6 +108,7 @@ import {
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import imageDefault from "@/assets/Images/book.default.png";
+import { useUploadHandler } from "@/Utilities/FireBase/prods.utilitis";
 
 export default defineComponent({
   name: "ProductForm",
@@ -169,6 +170,13 @@ export default defineComponent({
     const { value: image, errorMessage: imageError } = useField("image");
     //  image change handler
     const imageSelectHandler = (e) => {
+      useUploadHandler(e.target.files[0])
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       imageURL.value = URL.createObjectURL(e.target.files[0]);
       setFieldValue("image", imageURL.value);
     };

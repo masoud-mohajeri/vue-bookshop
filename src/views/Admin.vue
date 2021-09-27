@@ -62,7 +62,7 @@ export default defineComponent({
   },
   setup: () => {
     const status = ref("add");
-
+    // console.log(process.env.VUE_APP_API_KEY);
     return { status };
   },
 });

@@ -2,18 +2,25 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-const storage = firebase.storage();
-export const firestore = firebase.firestore();
+//
+
+// const storage = firebase.storage();
+// export const firestore = firebase.firestore();
+import {
+  projectAuth as auth,
+  projectFirestore as firestore,
+  projectStorage as storage,
+} from './initializeApp';
 
 // upload Image and gey DL url
-export const uploadHandler = (file) => {
+export const useUploadHandler = (file) => {
   const fileRef = 'images/' + file.name + Date.now();
   const storageRef = storage.ref();
   return new Promise((resolve, reject) => {
     storageRef
       .child(fileRef)
       .put(file)
-      .then((res) => {
+      .then(() => {
         storageRef
           .child(fileRef)
           .getDownloadURL()
@@ -50,7 +57,7 @@ export const deleteProductHandler = (id) => {
 // UPDATE A PRODUCT
 export const updateProductHandler = (prod) => {
   const fackeProd = { ...prod };
-  let docRef = firestore.collection('products').doc(fackeProd.id);
+  const docRef = firestore.collection('products').doc(fackeProd.id);
   delete fackeProd.id;
   return docRef.update(fackeProd);
 };

@@ -1,12 +1,28 @@
-import { firebaseConfig } from './config';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+// import { firebaseConfig } from './config';
+// import firebase from 'firebase/app';
+// import 'firebase/firestore';
 // import 'firebase/storage';
+import firebase from './config';
 import 'firebase/auth';
 
-firebase.initializeApp(firebaseConfig);
+//
 
-export const auth = firebase.auth();
+import 'firebase/firestore';
+import 'firebase/storage';
+
+// export const storage = firebase.storage();
+// export const firestore = firebase.firestore();
+
+import {
+  projectAuth as auth,
+  projectFirestore as firestore,
+  projectStorage as storage,
+} from './initializeApp';
+//
+
+// firebase.initializeApp(firebaseConfig);
+
+// export const auth = firebase.auth();
 
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: 'select_account' });
