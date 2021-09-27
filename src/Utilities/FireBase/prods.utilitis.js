@@ -12,7 +12,7 @@ import {
   projectStorage as storage,
 } from './initializeApp';
 
-// upload Image and gey DL url
+// upload Image and return DL url
 export const useUploadHandler = (file) => {
   const fileRef = 'images/' + file.name + Date.now();
   const storageRef = storage.ref();
@@ -37,9 +37,10 @@ export const SaveProductHandler = (product) => {
   return firestore.collection('products').add({
     name: product.name,
     price: product.price,
-    Inventory: product.Inventory,
+    inventory: product.inventory,
     imageUrl: product.imageUrl,
-    description: product.description, // + id => Redux Store
+    description: product.description,
+    author: product.author,
   });
 };
 // get all data from DB

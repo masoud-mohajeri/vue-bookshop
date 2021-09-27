@@ -8,6 +8,7 @@
 <script>
 import { defineComponent } from "@vue/runtime-core";
 import ProductForm from "@/components/ProductInfoForm.vue";
+import { SaveProductHandler } from "@/Utilities/FireBase/prods.utilitis";
 
 export default defineComponent({
   name: "AddProducts",
@@ -15,6 +16,13 @@ export default defineComponent({
   setup: () => {
     const bookSaverHandler = (e) => {
       console.log(e);
+      SaveProductHandler(e)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     return { bookSaverHandler };
   },

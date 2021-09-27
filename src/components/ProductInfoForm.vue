@@ -24,22 +24,22 @@
         <ion-label position="fixed"> موجودی انبار </ion-label>
         <ion-input
           type="number"
-          name="investory"
-          v-model="investory"
+          name="inventory"
+          v-model="inventory"
         ></ion-input>
       </ion-item>
-      <p class="error" v-if="investoryError">{{ investoryError }}</p>
+      <p class="error" v-if="inventoryError">{{ inventoryError }}</p>
       <ion-item>
         <ion-label position="fixed"> عکس </ion-label>
         <ion-input
           @change="imageSelectHandler"
           type="file"
           name="image"
-          v-model="image"
+          v-model="imageUrl"
           accept="image/*"
         ></ion-input>
       </ion-item>
-      <p class="error" v-if="imageError">{{ imageError }}</p>
+      <p class="error" v-if="mageUrlError">{{ mageUrlError }}</p>
 
       <ion-item>
         <ion-label position="fixed"> توضیحات </ion-label>
@@ -50,7 +50,7 @@
         ></ion-textarea>
       </ion-item>
       <p class="error" v-if="descriptionError">{{ descriptionError }}</p>
-      <img class="image-preview" v-if="imageURL" :src="imageURL" />
+      <img class="image-preview" v-if="imageRef" :src="imageRef" />
       <ion-grid v-if="!editMode">
         <ion-row>
           <ion-col size="6">
@@ -127,7 +127,7 @@ export default defineComponent({
     IonButton,
   },
   setup: (props, context) => {
-    const imageURL = ref(imageDefault);
+    const imageRef = ref(imageDefault);
     // Form schema
     const schema = yup.object({
       name: yup
@@ -140,7 +140,7 @@ export default defineComponent({
       author: yup
         .string("*مقدار این فیلد باید حروف باشد.")
         .required(" * این فیلد اجباری است . "),
-      investory: yup
+      inventory: yup
         .number("*مقدار این فیلد باید عددی باشد .")
         .required(" * این فیلد اجباری است . ")
         .min(0, "* باید بزرگتر از 0 باشد . "),
@@ -155,7 +155,7 @@ export default defineComponent({
         name: "",
         author: "",
         description: "",
-        investory: 0,
+        inventory: 0,
         price: 0,
       },
     });
@@ -163,22 +163,25 @@ export default defineComponent({
     const { value: name, errorMessage: nameError } = useField("name");
     const { value: price, errorMessage: priceError } = useField("price");
     const { value: author, errorMessage: authorError } = useField("author");
-    const { value: investory, errorMessage: investoryError } =
-      useField("investory");
+    const { value: inventory, errorMessage: inventoryError } =
+      useField("inventory");
     const { value: description, errorMessage: descriptionError } =
       useField("description");
-    const { value: image, errorMessage: imageError } = useField("image");
+    const { value: imageUrl, errorMessage: mageUrlError } =
+      useField("imageUrl");
     //  image change handler
     const imageSelectHandler = (e) => {
+      console.log(e.target.files[0]);
       useUploadHandler(e.target.files[0])
         .then((res) => {
-          console.log(res);
+          // console.log(res);
+          setFieldValue("imageUrl", res);
+          imageRef.value = res;
         })
         .catch((err) => {
+          // Error would be handled after ading state manaement and creating modal
           console.log(err);
         });
-      imageURL.value = URL.createObjectURL(e.target.files[0]);
-      setFieldValue("image", imageURL.value);
     };
     // form submit
     const submitHandler = handleSubmit((values) => {
@@ -188,8 +191,8 @@ export default defineComponent({
 
     const formResetHandler = () => {
       resetForm();
-      setFieldValue("image", "");
-      imageURL.value = imageDefault;
+      setFieldValue("imageUrl", "");
+      imageRef.value = imageDefault;
     };
 
     return {
@@ -199,13 +202,13 @@ export default defineComponent({
       priceError,
       author,
       authorError,
-      investory,
-      investoryError,
+      inventory,
+      inventoryError,
       description,
       descriptionError,
-      image,
-      imageError,
-      imageURL,
+      imageUrl,
+      mageUrlError,
+      imageRef,
       submitHandler,
       imageSelectHandler,
       formResetHandler,
