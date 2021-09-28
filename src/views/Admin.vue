@@ -61,8 +61,8 @@ export default defineComponent({
     AddProducts,
   },
   setup: () => {
-    const status = ref("add");
-    // console.log(process.env.VUE_APP_API_KEY);
+    const status = ref("edit");
+
     return { status };
   },
 });

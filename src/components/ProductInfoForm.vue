@@ -78,12 +78,22 @@
       <ion-grid v-if="editMode">
         <ion-row>
           <ion-col size="6">
-            <ion-button fill="solid" expand="full" color="success">
+            <ion-button
+              @click="editHandler"
+              fill="solid"
+              expand="full"
+              color="success"
+            >
               تغییر
             </ion-button>
           </ion-col>
           <ion-col size="6">
-            <ion-button fill="solid" expand="full" color="danger">
+            <ion-button
+              @click="deleteHandler"
+              fill="solid"
+              expand="full"
+              color="danger"
+            >
               حذف
             </ion-button>
           </ion-col>
@@ -94,7 +104,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "@vue/runtime-core";
+import { defineComponent, onMounted, ref } from "@vue/runtime-core";
 import {
   IonItem,
   IonLabel,
@@ -114,8 +124,9 @@ export default defineComponent({
   name: "ProductForm",
   props: {
     editMode: { type: Boolean, default: false },
+    book: { required: false },
   },
-  emits: ["data"],
+  emits: ["data", "delete", "edit"],
   components: {
     IonItem,
     IonLabel,
@@ -169,6 +180,20 @@ export default defineComponent({
       useField("description");
     const { value: imageUrl, errorMessage: mageUrlError } =
       useField("imageUrl");
+    // in case form is used to edit a prod
+    onMounted(() => {
+      console.log("edit mode");
+      if (props.editMode) {
+        console.log("we have book");
+        setFieldValue("name", props.book.name);
+        setFieldValue("price", props.book.price);
+        setFieldValue("author", props.book.author);
+        setFieldValue("inventory", props.book.inventory);
+        setFieldValue("description", props.book.description);
+        setFieldValue("imageUrl", props.book.imageUrl);
+        imageRef.value = props.book.imageUrl;
+      }
+    });
     //  image change handler
     const imageSelectHandler = (e) => {
       console.log(e.target.files[0]);
@@ -195,6 +220,14 @@ export default defineComponent({
       imageRef.value = imageDefault;
     };
 
+    const deleteHandler = () => {
+      context.emit("delete", props.book.id);
+    };
+
+    const editHandler = handleSubmit((values) => {
+      context.emit("edit", values);
+    });
+
     return {
       name,
       nameError,
@@ -212,6 +245,8 @@ export default defineComponent({
       submitHandler,
       imageSelectHandler,
       formResetHandler,
+      editHandler,
+      deleteHandler,
     };
   },
 });
