@@ -31,6 +31,7 @@
               type="submit"
               color="danger"
               expand="block"
+              @click="gmailLoginHandler"
             >
               ورود با گوگل
             </ion-button>
@@ -55,7 +56,13 @@ import {
 } from "@ionic/vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
-import { LoginWithEmail, GetUser } from "@/Utilities/FireBase/auth.utilitis";
+import {
+  LoginWithEmail,
+  GetUser,
+  signinWithGoogle,
+  GetUserWithEmail,
+  UnregisterEmail,
+} from "@/Utilities/FireBase/auth.utilitis";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -108,7 +115,30 @@ export default defineComponent({
       loginWithEmail(values.email, values.password);
     });
 
-    return { submitHandler, email, emailError, password, passwordError };
+    const gmailLoginHandler = async () => {
+      try {
+        const googleRes = await signinWithGoogle();
+        const userInfoDB = await GetUserWithEmail(googleRes.user.email);
+        if (userInfoDB.empty) {
+          const unregEmail = await UnregisterEmail();
+          console.log("Register then login ! ");
+        } else {
+          // wellcome\
+          console.log("Wellcome ! ");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    return {
+      submitHandler,
+      email,
+      emailError,
+      password,
+      passwordError,
+      gmailLoginHandler,
+    };
   },
 });
 </script>

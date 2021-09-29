@@ -38,13 +38,22 @@ export const SaveUser = (user) => {
   });
 };
 
-// Get User Info to DB (role)
+// Get User Info from DB (role) - uid
 
 export const GetUser = (uid) => {
   // console.log(uid);
   return firestore
     .collection('users')
     .doc(uid)
+    .get();
+};
+// Get User Info from DB (role) - email
+
+export const GetUserWithEmail = (email) => {
+  // console.log(uid);
+  return firestore
+    .collection('users')
+    .where('email', '==', email)
     .get();
 };
 // Auth with Email-Pass (Register)
