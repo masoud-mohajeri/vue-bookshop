@@ -41,6 +41,24 @@
       </p>
       <p class="error" v-if="passwordRepError">* {{ passwordRepError }}</p>
 
+      <ion-list>
+        <ion-radio-group value="biff" v-model="role">
+          <ion-list-header>
+            <ion-label>نقش</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>مشتری</ion-label>
+            <ion-radio slot="start" value="customer"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>ادمین</ion-label>
+            <ion-radio slot="start" value="admin"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
       <ion-button fill="solid" type="submit" expand="block">
         ثبت نام
       </ion-button>
@@ -51,9 +69,24 @@
 
 <script>
 import { defineComponent, ref } from "@vue/runtime-core";
-import { IonItem, IonLabel, IonInput, IonButton } from "@ionic/vue";
+import {
+  IonInput,
+  IonButton,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonRadio,
+  IonRadioGroup,
+} from "@ionic/vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
+import {
+  RegWithEmail,
+  SaveUser,
+  UnregisterEmail,
+} from "@/Utilities/FireBase/auth.utilitis";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "RegistrationForm",
@@ -62,10 +95,15 @@ export default defineComponent({
     IonLabel,
     IonInput,
     IonButton,
+    IonList,
+    IonListHeader,
+    IonRadio,
+    IonRadioGroup,
   },
   setup: () => {
     const passwordRepError = ref(null);
-
+    const store = useStore();
+    // Forem schema
     const schema = yup.object({
       name: yup
         .string()
@@ -84,12 +122,20 @@ export default defineComponent({
         .required("این فیلد الزامیست . ")
         .min(6, " پسورد معتبر باید حداقل 6 کارکتر باشد"),
       confirmPassword: yup.string().required("این فیلد الزامیست . "),
+      role: yup.string().required("این فیلد الزامیست . "),
     });
-
+    //  Form creation
     const { meta, handleSubmit } = useForm({
       validationSchema: schema,
+      initialValues: {
+        name: "",
+        lastName: "",
+        password: "",
+        confirmPassword: "",
+        role: "customer",
+      },
     });
-
+    // Feilds
     const { value: name, errorMessage: nameError } = useField("name");
     const { value: lastName, errorMessage: lastNameError } =
       useField("lastName");
@@ -98,11 +144,53 @@ export default defineComponent({
       useField("password");
     const { value: confirmPassword, errorMessage: confirmPasswordError } =
       useField("confirmPassword");
+    const { value: role, errorMessage: roleError } = useField("role");
+    // Registeration
+    const registeration = async (values) => {
+      try {
+        const registerOfFirebase = await RegWithEmail(
+          values.email,
+          values.password
+        );
 
+        registerOfFirebase &&
+          console.log(
+            "firebase registered that email successfully",
+            registerOfFirebase
+          );
+
+        const registerInDB = await SaveUser({
+          name: values.name,
+          email: values.email,
+          role: values.role,
+          uid: registerOfFirebase.user.uid,
+        });
+
+        !registerInDB &&
+          console.log("email and user info registerd in DB successfully");
+
+        store.commit("logedIn", {
+          name: values.name,
+          email: values.email,
+          role: values.role,
+        });
+      } catch (error) {
+        const unregisterInError = await UnregisterEmail();
+        console.log(error);
+        if (unregisterInError) {
+          console.log(
+            "because of error in registration we unregistered that email"
+          );
+        }
+      }
+    };
+
+    // Submit and register
     const submitHandler = handleSubmit((values) => {
       passwordRepError.value = null;
       if (password.value === confirmPassword.value && password.value) {
         console.log(values);
+        registeration(values);
       } else {
         passwordRepError.value = "رمز های عبور مطابقت ندارند";
       }
@@ -121,6 +209,8 @@ export default defineComponent({
       confirmPasswordError,
       passwordRepError,
       submitHandler,
+      role,
+      roleError,
     };
   },
 });

@@ -1,8 +1,8 @@
 // import { firebaseConfig } from './config';
-// import firebase from 'firebase/app';
+import firebase from 'firebase/app';
 // import 'firebase/firestore';
 // import 'firebase/storage';
-import firebase from './config';
+// import firebase from './config';
 import 'firebase/auth';
 
 //
@@ -13,11 +13,7 @@ import 'firebase/storage';
 // export const storage = firebase.storage();
 // export const firestore = firebase.firestore();
 
-import {
-  projectAuth as auth,
-  projectFirestore as firestore,
-  projectStorage as storage,
-} from './initializeApp';
+import { projectAuth as auth } from './initializeApp';
 //
 
 // firebase.initializeApp(firebaseConfig);

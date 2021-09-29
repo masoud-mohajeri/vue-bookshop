@@ -43,7 +43,7 @@
 
 
 <script>
-import { defineComponent, ref } from "@vue/runtime-core";
+import { defineComponent } from "@vue/runtime-core";
 import {
   IonItem,
   IonLabel,
@@ -55,6 +55,8 @@ import {
 } from "@ionic/vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
+import { LoginWithEmail, GetUser } from "@/Utilities/FireBase/auth.utilitis";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "LoginForm",
@@ -68,6 +70,7 @@ export default defineComponent({
     IonCol,
   },
   setup: () => {
+    const store = useStore();
     const schema = yup.object({
       email: yup
         .string()
@@ -79,7 +82,7 @@ export default defineComponent({
         .min(6, " پسورد معتبر باید حداقل 6 کارکتر باشد"),
     });
 
-    const { meta, handleSubmit } = useForm({
+    const { handleSubmit } = useForm({
       validationSchema: schema,
     });
 
@@ -87,8 +90,22 @@ export default defineComponent({
     const { value: password, errorMessage: passwordError } =
       useField("password");
 
+    const loginWithEmail = async (email, password) => {
+      try {
+        const firebaseLogin = await LoginWithEmail(email, password);
+        const getName = await GetUser(firebaseLogin.user.uid);
+        store.commit("logedIn", {
+          name: getName.data().name,
+          email: getName.data().email,
+          role: getName.data().role,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     const submitHandler = handleSubmit((values) => {
-      console.log(values);
+      loginWithEmail(values.email, values.password);
     });
 
     return { submitHandler, email, emailError, password, passwordError };
