@@ -9,7 +9,14 @@
       <div class="body-shcart">
         <h2>سبد خرید</h2>
         <!-- total + address -->
-
+        <h5>مبلغ قابل پرداخت : {{ store.getters.getCard.price }} تومان</h5>
+        <form>
+          <ion-item>
+            <ion-label position="fixed">آدرس </ion-label>
+            <ion-textarea auto-grow></ion-textarea>
+          </ion-item>
+          <ion-button type="submit" color="success">پرداخت</ion-button>
+        </form>
         <!-- items in card  -->
 
         <CardItem
