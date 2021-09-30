@@ -40,9 +40,7 @@ export default defineComponent({
   },
   setup: (props) => {
     const store = useStore();
-    // onMounted(() => {
-    //   console.log(props.book);
-    // });
+
     const addToCard = () => {
       console.log({ ...props.book });
       store.commit("addProd", props.book);

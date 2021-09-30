@@ -6,7 +6,19 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <h2>سبد خرید </h2>
+      <div class="body-shcart">
+        <h2>سبد خرید</h2>
+        <!-- total + address -->
+
+        <!-- items in card  -->
+
+        <CardItem
+          v-for="book of store.getters.getCard.prods"
+          :book="book"
+          :key="book.id"
+          @onDelete="deleteHandler($event)"
+        />
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -19,6 +31,10 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue";
+import CardItem from "@/components/CardItem.vue";
+// import { GetProductHandler } from "@/Utilities/FireBase/prods.utilitis";
+import { onMounted, reactive } from "@vue/runtime-core";
+import { useStore } from "vuex";
 
 export default {
   name: "ShoppingCard",
@@ -28,6 +44,51 @@ export default {
     IonTitle,
     IonContent,
     IonPage,
+    CardItem,
+  },
+  setup: () => {
+    const store = useStore();
+    // const ShCard = reactive({
+    //   books: null,
+    //   price: 0,
+    // });
+    // const fetchDataHandler = async () => {
+    //   const fetcheData = await GetProductHandler();
+    // };
+    // onMounted(() => {
+    //   ShCard.books = store.getters.getCard.prods;
+    //   ShCard.price = store.getters.getCard.price;
+    // });
+    const deleteHandler = (e: { id: any; price: any }) => {
+      // console.log(e);
+      store.commit("removeProd", { id: e.id, price: e.price });
+    };
+    return { deleteHandler, store };
   },
 };
 </script>
+
+
+<style scoped>
+.body-shcart {
+  width: 40%;
+  margin: auto;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 1300px) {
+  .body-shcart {
+    width: 55%;
+  }
+}
+@media (max-width: 1000px) {
+  .body-shcart {
+    width: 80%;
+  }
+}
+@media (max-width: 600px) {
+  .body-shcart {
+    width: 95%;
+  }
+}
+</style>

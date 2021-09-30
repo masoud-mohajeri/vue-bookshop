@@ -5,8 +5,8 @@ export default {
     state.prods.push(payload);
   },
   removeProd(state, payload) {
+    state.prods = state.prods.filter((prd) => prd.id !== payload.id);
     state.price = +state.price - +payload.price;
-    state.prods.filter((prd) => prd.id === payload.id);
   },
   purchase(state) {
     state.price = 0;
