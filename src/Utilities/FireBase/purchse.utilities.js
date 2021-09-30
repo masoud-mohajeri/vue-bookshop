@@ -17,8 +17,8 @@ export const decreceInvestory = (id, count) => {
 export const addOrderToDB = (order) => {
   return firestore.collection('orders').add({
     status: 'paied',
-    bookIdArray: order.books,
-    ownerEmail: order.owner,
+    bookIdArray: order.prods,
+    ownerEmail: order.email,
     ownerAddress: order.address,
   });
 };

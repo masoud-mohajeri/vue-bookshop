@@ -10,10 +10,14 @@
         <h2>سبد خرید</h2>
         <!-- total + address -->
         <h5>مبلغ قابل پرداخت : {{ store.getters.getCard.price }} تومان</h5>
-        <form>
+        <form @submit.prevent="payCartHandler($event)">
           <ion-item>
             <ion-label position="fixed">آدرس </ion-label>
-            <ion-textarea auto-grow></ion-textarea>
+            <ion-textarea
+              name="address"
+              v-model="address"
+              auto-grow
+            ></ion-textarea>
           </ion-item>
           <ion-button type="submit" color="success">پرداخت</ion-button>
         </form>
@@ -23,7 +27,7 @@
           v-for="book of store.getters.getCard.prods"
           :book="book"
           :key="book.id"
-          @onDelete="deleteHandler($event)"
+          @onDelete="deleteHandler"
         />
       </div>
     </ion-content>
@@ -44,6 +48,9 @@ import {
 } from "@ionic/vue";
 import CardItem from "@/components/CardItem.vue";
 import { useStore } from "vuex";
+import useToast from "@/Utilities/Hooks/useToast";
+import { addOrderToDB } from "@/Utilities/FireBase/purchse.utilities";
+import { ref } from "@vue/reactivity";
 
 export default {
   name: "ShoppingCard",
@@ -61,12 +68,43 @@ export default {
   },
   setup: () => {
     const store = useStore();
-
+    const toast = useToast;
+    const address = ref("");
     const deleteHandler = (e: { id: any; price: any }) => {
       store.commit("removeProd", { id: e.id, price: e.price });
     };
+    const purchase = async (address: string) => {
+      try {
+        const dbRes = await addOrderToDB({
+          email: store.state.Auth.email,
+          address,
+          prods: store.getters.getCard.prods,
+        });
 
-    return { deleteHandler, store };
+        store.commit("purchase");
+
+        toast("خرید با موفقیت انجام شد ");
+      } catch (error) {
+        console.log(error);
+        toast("مشکلی در فرایند خرید وجود دارد . لطفا دوباره امتحان کنید. ");
+      }
+    };
+
+    const payCartHandler = () => {
+      // const toast = useToast;
+
+      if (!store.getters.isCustomer) {
+        toast("لطفا وارد شوید ");
+        return;
+      }
+
+      if (!address.value.trim()) {
+        toast("لطفا آدرس را وارد کنید ");
+        return;
+      }
+      purchase(address.value);
+    };
+    return { deleteHandler, store, payCartHandler, address };
   },
 };
 </script>

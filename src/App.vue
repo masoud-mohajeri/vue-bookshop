@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-import { IonApp, IonRouterOutlet } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { IonApp, IonRouterOutlet, toastController } from "@ionic/vue";
+import { defineComponent, provide } from "vue";
 import TabForNav from "@/components/TabForNav.vue";
 export default defineComponent({
   name: "App",
@@ -16,6 +16,9 @@ export default defineComponent({
     IonApp,
     IonRouterOutlet,
     TabForNav,
+  },
+  setup: () => {
+    return {};
   },
 });
 </script>
@@ -37,5 +40,9 @@ export default defineComponent({
 * {
   font-family: "Vazir", "Roboto", sans-serif;
   --ion-font-family: "Vazir", "Roboto", sans-serif;
+}
+
+.text-align-center {
+  text-align: center;
 }
 </style>
