@@ -1,18 +1,21 @@
 <template>
   <ion-app dir="rtl">
-    <ion-router-outlet />
+    <tab-for-nav>
+      <ion-router-outlet />
+    </tab-for-nav>
   </ion-app>
 </template>
 
 <script lang="ts">
 import { IonApp, IonRouterOutlet } from "@ionic/vue";
 import { defineComponent } from "vue";
-
+import TabForNav from "@/components/TabForNav.vue";
 export default defineComponent({
   name: "App",
   components: {
     IonApp,
     IonRouterOutlet,
+    TabForNav,
   },
 });
 </script>

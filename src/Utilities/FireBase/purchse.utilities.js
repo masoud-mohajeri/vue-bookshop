@@ -3,11 +3,7 @@ import firebase from './config';
 import 'firebase/firestore';
 
 // export const firestore = firebase.firestore();
-import {
-  projectAuth as auth,
-  projectFirestore as firestore,
-  projectStorage as storage,
-} from './initializeApp';
+import { projectFirestore as firestore } from './initializeApp';
 
 // decrece investory
 export const decreceInvestory = (id, count) => {

@@ -37,10 +37,12 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonLabel,
+  IonTextarea,
+  IonItem,
+  IonButton,
 } from "@ionic/vue";
 import CardItem from "@/components/CardItem.vue";
-// import { GetProductHandler } from "@/Utilities/FireBase/prods.utilitis";
-import { onMounted, reactive } from "@vue/runtime-core";
 import { useStore } from "vuex";
 
 export default {
@@ -52,24 +54,18 @@ export default {
     IonContent,
     IonPage,
     CardItem,
+    IonLabel,
+    IonTextarea,
+    IonItem,
+    IonButton,
   },
   setup: () => {
     const store = useStore();
-    // const ShCard = reactive({
-    //   books: null,
-    //   price: 0,
-    // });
-    // const fetchDataHandler = async () => {
-    //   const fetcheData = await GetProductHandler();
-    // };
-    // onMounted(() => {
-    //   ShCard.books = store.getters.getCard.prods;
-    //   ShCard.price = store.getters.getCard.price;
-    // });
+
     const deleteHandler = (e: { id: any; price: any }) => {
-      // console.log(e);
       store.commit("removeProd", { id: e.id, price: e.price });
     };
+
     return { deleteHandler, store };
   },
 };

@@ -13,5 +13,11 @@ export const Auth = {
     isAuth(state) {
       return state.exist;
     },
+    isAdmin(state) {
+      return state.exist && state.role === 'admin';
+    },
+    isCustomer(state) {
+      return state.exist && state.role === 'customer';
+    },
   },
 };
