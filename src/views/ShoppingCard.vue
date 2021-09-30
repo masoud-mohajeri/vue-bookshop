@@ -2,11 +2,11 @@
   <ion-page>
     <ion-header>
       <ion-toolbar color="success">
-        <ion-title>Sh Card</ion-title>
+        <ion-title>سبد خرید </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <h2>Sh Card</h2>
+      <h2>سبد خرید </h2>
     </ion-content>
   </ion-page>
 </template>
