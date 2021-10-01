@@ -61,7 +61,7 @@ export default defineComponent({
     AddProducts,
   },
   setup: () => {
-    const status = ref("edit");
+    const status = ref("orders");
 
     return { status };
   },
