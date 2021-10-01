@@ -65,6 +65,7 @@ import {
 } from "@/Utilities/FireBase/auth.utilitis";
 import { useStore } from "vuex";
 import useToast from "@/Utilities/Hooks/useToast";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "LoginForm",
@@ -80,6 +81,8 @@ export default defineComponent({
   setup: () => {
     const toast = useToast;
     const store = useStore();
+    const router = useRouter();
+
     const schema = yup.object({
       email: yup
         .string()
@@ -109,6 +112,7 @@ export default defineComponent({
           role: getName.data().role,
         });
         toast("شما با موفقیت وارد شدید . ");
+        router.push("/");
       } catch (error) {
         console.log(error);
         toast("مشکلی وجود دارد ،دوباره امتحان کنید . ");

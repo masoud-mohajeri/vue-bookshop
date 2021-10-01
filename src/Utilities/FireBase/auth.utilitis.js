@@ -70,6 +70,10 @@ export const LoginWithEmail = (email, password) => {
 export const UnregisterEmail = () => {
   return firebase.auth().currentUser.delete();
 };
+// Logout
+export const userLogout = () => {
+  return firebase.auth().signOut();
+};
 //  prods
 // const storage = firebase.storage();
 

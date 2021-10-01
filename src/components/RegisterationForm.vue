@@ -88,6 +88,7 @@ import {
 } from "@/Utilities/FireBase/auth.utilitis";
 import { useStore } from "vuex";
 import useToast from "@/Utilities/Hooks/useToast";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "RegistrationForm",
@@ -105,6 +106,8 @@ export default defineComponent({
     const toast = useToast;
     const passwordRepError = ref(null);
     const store = useStore();
+    const router = useRouter();
+
     // Forem schema
     const schema = yup.object({
       name: yup
@@ -168,15 +171,13 @@ export default defineComponent({
           uid: registerOfFirebase.user.uid,
         });
 
-        // !registerInDB &&
-        //   console.log("email and user info registerd in DB successfully");
-
         store.commit("logedIn", {
           name: values.name,
           email: values.email,
           role: values.role,
         });
         toast("شما با موفقید ثبت نام کردید.");
+        router.push("/");
       } catch (error) {
         const unregisterInError = await UnregisterEmail();
         console.log(error);

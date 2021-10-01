@@ -1,12 +1,16 @@
 <template>
-  <ion-tabs @getTab="tabMethod($event)">
+  <ion-tabs>
     <slot></slot>
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="login" href="/login" v-if="!store.getters.isAuth">
         <ion-icon :icon="logIn"></ion-icon>
         <ion-label>ورود</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="logout" v-if="store.getters.isAuth">
+      <ion-tab-button
+        tab="logout"
+        v-if="store.getters.isAuth"
+        @click="logoutHandler"
+      >
         <ion-icon :icon="logOut"></ion-icon>
         <ion-label>خروج</ion-label>
       </ion-tab-button>
@@ -63,6 +67,10 @@ import {
   person,
 } from "ionicons/icons";
 import { useStore } from "vuex";
+import { userLogout } from "@/Utilities/FireBase/auth.utilitis";
+import useToast from "@/Utilities/Hooks/useToast";
+import { useRouter } from "vue-router";
+
 export default defineComponent({
   name: "TabForNav",
   components: {
@@ -75,8 +83,20 @@ export default defineComponent({
   },
   setup: () => {
     const store = useStore();
-    const tabMethod = (e) => {
-      console.log(e);
+    // const tabMethod = (e) => {
+    //   console.log(e);
+    // };
+    const toast = useToast;
+    const router = useRouter();
+    const logoutHandler = async () => {
+      try {
+        const logoutRes = await userLogout();
+        toast("شما با موفقیت از حساب کاربری خود خارج شدید.");
+        store.commit("logedOut");
+        router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
     };
     return {
       storefront,
@@ -86,7 +106,8 @@ export default defineComponent({
       cart,
       personCircle,
       person,
-      tabMethod,
+      logoutHandler,
+      // tabMethod,
     };
   },
 });
