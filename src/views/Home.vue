@@ -140,6 +140,7 @@ export default {
 <style scoped>
 .slide-body {
   width: 90vw;
+  max-width: 500px;
   height: 70vh;
   padding: 15px;
   /* border: 1px solid red; */
