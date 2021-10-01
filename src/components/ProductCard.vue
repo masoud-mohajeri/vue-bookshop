@@ -18,7 +18,7 @@
 
 <script>
 import { defineComponent, onMounted } from "@vue/runtime-core";
-import image from "@/assets/Images/compound-effect.jpg";
+// import image from "@/assets/Images/compound-effect.jpg";
 import {
   IonCard,
   IonCardContent,
@@ -46,7 +46,7 @@ export default defineComponent({
       store.commit("addProd", props.book);
     };
 
-    return { image, addToCard };
+    return { addToCard };
   },
 });
 </script>
