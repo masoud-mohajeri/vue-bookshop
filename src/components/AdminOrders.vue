@@ -9,21 +9,26 @@
 import { defineComponent, onMounted, ref } from "@vue/runtime-core";
 import { getOrderInfoAdmin } from "@/Utilities/FireBase/purchse.utilities";
 import AdminOrdersItems from "@/components/AdminOrdersItems.vue";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "AdminOrders",
   components: { AdminOrdersItems },
   setup: () => {
     const orders = ref([]);
+    const toast = useToast;
     const getAllOrders = async () => {
       try {
         const fetchedData = await getOrderInfoAdmin();
-        console.log(fetchedData);
+        // console.log(fetchedData);
         fetchedData.docs.forEach((doc) =>
           orders.value.push({ id: doc.id, ...doc.data() })
         );
-        console.log(orders);
+        // console.log(orders);
       } catch (error) {
+        toast(
+          "مشکلی در ارتباط با سورو وجود دارد . لطفا با تحریم شکن امتحان کنید . "
+        );
         console.log(error);
       }
     };

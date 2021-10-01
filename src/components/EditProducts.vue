@@ -13,13 +13,14 @@
 import { defineComponent, onMounted, ref } from "@vue/runtime-core";
 import { GetProductHandler } from "@/Utilities/FireBase/prods.utilitis";
 import AdminProductCardEdit from "@/components/AdminProductCardEdit.vue";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "EditProducts",
   components: { AdminProductCardEdit },
   setup: () => {
     const products = ref([]);
-
+    const toast = useToast;
     onMounted(() => {
       GetProductHandler()
         .then((res) => {
@@ -31,6 +32,8 @@ export default defineComponent({
           });
         })
         .catch((err) => {
+          toast("مشکلی در ارتباط وجود دارد ، دوباره امتحان کنید");
+
           console.log(err);
         });
     });

@@ -64,6 +64,7 @@ import {
   UnregisterEmail,
 } from "@/Utilities/FireBase/auth.utilitis";
 import { useStore } from "vuex";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "LoginForm",
@@ -77,6 +78,7 @@ export default defineComponent({
     IonCol,
   },
   setup: () => {
+    const toast = useToast;
     const store = useStore();
     const schema = yup.object({
       email: yup
@@ -106,8 +108,10 @@ export default defineComponent({
           email: getName.data().email,
           role: getName.data().role,
         });
+        toast("شما با موفقیت وارد شدید . ");
       } catch (error) {
         console.log(error);
+        toast("مشکلی وجود دارد ،دوباره امتحان کنید . ");
       }
     };
 
@@ -122,12 +126,15 @@ export default defineComponent({
         if (userInfoDB.empty) {
           const unregEmail = await UnregisterEmail();
           console.log("Register then login ! ");
+          toast("لطفا ابتدا ثبت نام و سپس نسبت به ورود اقدام کنید .");
         } else {
           // wellcome\
           console.log("Wellcome ! ");
+          toast("خوش آمدید");
         }
       } catch (error) {
         console.log(error);
+        toast("مشکلی وجود دارد . دوباره امتحان کنید .");
       }
     };
 

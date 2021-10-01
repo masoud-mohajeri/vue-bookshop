@@ -29,6 +29,7 @@ import {
 import ProductCard from "@/components/ProductCard.vue";
 import { defineComponent, onMounted, ref } from "@vue/runtime-core";
 import { GetProductHandler } from "@/Utilities/FireBase/prods.utilitis";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "Products",
@@ -42,7 +43,7 @@ export default defineComponent({
   },
   setup: () => {
     const BooksArray: any = ref([]);
-
+    const toast = useToast;
     const getProdsHandler = async () => {
       try {
         const fetchedBooks = await GetProductHandler();
@@ -50,6 +51,7 @@ export default defineComponent({
           return BooksArray.value.push({ id: doc.id, ...doc.data() });
         });
       } catch (error) {
+        toast("مشکلی در ارتباط وجود دارد ، با تحریک شکن امتحان کنید");
         console.log(error);
       }
     };

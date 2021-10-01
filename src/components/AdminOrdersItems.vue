@@ -37,6 +37,7 @@ import {
 } from "@ionic/vue";
 
 import { postOrder } from "@/Utilities/FireBase/purchse.utilities";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "AdminOrdersItems",
@@ -53,23 +54,26 @@ export default defineComponent({
   props: { order: { required: true } },
   setup: (props, context) => {
     const postTrackCode = ref(null);
-
+    const toast = useToast;
     const postLogic = async (id, post) => {
       try {
         const postingAction = await postOrder(id, post);
-        console.log("posted");
+        // console.log("posted");
+        toast("کالا با موفقیت ارسال شد .");
       } catch (error) {
+        toast("مشکلی در ارتباط وجود دارد ، دوباره امتحان کنید");
         console.log(error);
       }
     };
 
     const sendHandler = (id) => {
       if (postTrackCode.value) {
-        console.log("sent", postTrackCode);
-        console.log(id);
+        // console.log("sent", postTrackCode);
+        // console.log(id);
         postLogic(id, postTrackCode.value);
       } else {
         console.log("no code ! ");
+        toast("لطفا کد رهگیری پستی را وارد کنید . ");
       }
     };
 

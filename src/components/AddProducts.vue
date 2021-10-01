@@ -8,18 +8,22 @@
 import { defineComponent } from "@vue/runtime-core";
 import ProductForm from "@/components/ProductInfoForm.vue";
 import { SaveProductHandler } from "@/Utilities/FireBase/prods.utilitis";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "AddProducts",
   components: { ProductForm },
   setup: () => {
+    const toast = useToast;
     const bookSaverHandler = (e) => {
       console.log(e);
       SaveProductHandler(e)
         .then((res) => {
-          console.log(res);
+          toast("کتاب با موفقیت در سامانه ثبت شد .");
+          // console.log(res);
         })
         .catch((err) => {
+          toast("مشکلی در ثبت کتاب وجود دارد . دوباره امتحان کنید.");
           console.log(err);
         });
     };

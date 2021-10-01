@@ -87,6 +87,7 @@ import {
   UnregisterEmail,
 } from "@/Utilities/FireBase/auth.utilitis";
 import { useStore } from "vuex";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "RegistrationForm",
@@ -101,6 +102,7 @@ export default defineComponent({
     IonRadioGroup,
   },
   setup: () => {
+    const toast = useToast;
     const passwordRepError = ref(null);
     const store = useStore();
     // Forem schema
@@ -153,11 +155,11 @@ export default defineComponent({
           values.password
         );
 
-        registerOfFirebase &&
-          console.log(
-            "firebase registered that email successfully",
-            registerOfFirebase
-          );
+        // registerOfFirebase &&
+        //   console.log(
+        //     "firebase registered that email successfully",
+        //     registerOfFirebase
+        //   );
 
         const registerInDB = await SaveUser({
           name: values.name,
@@ -166,17 +168,19 @@ export default defineComponent({
           uid: registerOfFirebase.user.uid,
         });
 
-        !registerInDB &&
-          console.log("email and user info registerd in DB successfully");
+        // !registerInDB &&
+        //   console.log("email and user info registerd in DB successfully");
 
         store.commit("logedIn", {
           name: values.name,
           email: values.email,
           role: values.role,
         });
+        toast("شما با موفقید ثبت نام کردید.");
       } catch (error) {
         const unregisterInError = await UnregisterEmail();
         console.log(error);
+        toast("مشکلی در ثبت نام وجود دارد . دوباره امتحان کنید.");
         if (unregisterInError) {
           console.log(
             "because of error in registration we unregistered that email"
@@ -189,7 +193,7 @@ export default defineComponent({
     const submitHandler = handleSubmit((values) => {
       passwordRepError.value = null;
       if (password.value === confirmPassword.value && password.value) {
-        console.log(values);
+        // console.log(values);
         registeration(values);
       } else {
         passwordRepError.value = "رمز های عبور مطابقت ندارند";

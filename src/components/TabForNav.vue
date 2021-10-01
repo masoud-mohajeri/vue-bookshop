@@ -22,7 +22,11 @@
       >
         <ion-icon :icon="cart"></ion-icon>
         <ion-label>سبد خرید</ion-label>
-        <ion-badge color="danger">6</ion-badge>
+        <ion-badge
+          color="danger"
+          v-if="store.getters.getCard.prods.length > 0"
+          >{{ store.getters.getCard.prods.length }}</ion-badge
+        >
       </ion-tab-button>
       <ion-tab-button tab="admin" href="/admin" v-if="store.getters.isAdmin">
         <ion-icon :icon="personCircle"></ion-icon>

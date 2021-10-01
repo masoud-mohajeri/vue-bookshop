@@ -119,6 +119,7 @@ import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import imageDefault from "@/assets/Images/book.default.png";
 import { useUploadHandler } from "@/Utilities/FireBase/prods.utilitis";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "ProductForm",
@@ -138,6 +139,7 @@ export default defineComponent({
     IonButton,
   },
   setup: (props, context) => {
+    const toast = useToast;
     const imageRef = ref(imageDefault);
     // Form schema
     const schema = yup.object({
@@ -182,9 +184,9 @@ export default defineComponent({
       useField("imageUrl");
     // in case form is used to edit a prod
     onMounted(() => {
-      console.log("edit mode");
+      // console.log("edit mode");
       if (props.editMode) {
-        console.log("we have book");
+        // console.log("we have book");
         setFieldValue("name", props.book.name);
         setFieldValue("price", props.book.price);
         setFieldValue("author", props.book.author);
@@ -196,15 +198,18 @@ export default defineComponent({
     });
     //  image change handler
     const imageSelectHandler = (e) => {
-      console.log(e.target.files[0]);
+      toast(" درحال آپلود عکس ...");
+      // console.log(e.target.files[0]);
       useUploadHandler(e.target.files[0])
         .then((res) => {
           // console.log(res);
           setFieldValue("imageUrl", res);
           imageRef.value = res;
+          toast("عکس با موفقیت آپلود شد");
         })
         .catch((err) => {
           // Error would be handled after ading state manaement and creating modal
+          toast("مشکلی در آپلود عکس وجود دارد. با تحریم شکن امتحان کنید .");
           console.log(err);
         });
     };

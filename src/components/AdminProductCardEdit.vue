@@ -38,6 +38,7 @@ import {
   deleteProductHandler,
   updateProductHandler,
 } from "@/Utilities/FireBase/prods.utilitis";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "AdminProductCardEdit",
@@ -48,37 +49,38 @@ export default defineComponent({
     },
   },
   setup: (props) => {
+    const toast = useToast;
     const editMode = ref(false);
     const editModeHandler = () => {
       editMode.value = !editMode.value;
-      console.log("editMode", editMode.value);
+      // console.log("editMode", editMode.value);
     };
 
     const editTheBase = (e) => {
-      console.log("edit", e);
+      // console.log("edit", e);
       updateProductHandler({ ...e, id: props.book.id })
         .then((res) => {
-          console.log("updated successfully ", res);
+          toast("اطلاعات کتاب با موفقیت به روز شد . ");
+          // console.log("updated successfully ", res);
         })
         .catch((err) => {
+          toast("مشکلی در به روز رسانی وجود دارد . با تحریک شکن امتحان کنید .");
           console.log("update error", err);
         });
     };
 
     const deleteTheBase = () => {
-      console.log("delete");
+      // console.log("delete");
       deleteProductHandler(props.book.id)
         .then((res) => {
-          console.log("deleted successfully ", res);
+          toast("کتاب با موفقیت حذف شد .");
+          // console.log("deleted successfully ", res);
         })
         .catch((err) => {
+          toast("مشکلی در حذف وجود دارد . دوباره امتحان کنید . ");
           console.log("delete error", err);
         });
     };
-
-    onMounted(() => {
-      // console.log(props);
-    });
 
     return { editMode, editModeHandler, deleteTheBase, editTheBase };
   },

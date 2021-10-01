@@ -27,6 +27,7 @@ import {
   IonButton,
 } from "@ionic/vue";
 import { useStore } from "vuex";
+import useToast from "@/Utilities/Hooks/useToast";
 
 export default defineComponent({
   name: "ProductCard",
@@ -40,10 +41,11 @@ export default defineComponent({
   },
   setup: (props) => {
     const store = useStore();
-
+    const toast = useToast;
     const addToCard = () => {
-      console.log({ ...props.book });
+      // console.log({ ...props.book });
       store.commit("addProd", props.book);
+      toast("کالا به سبد خرید اضافه شد .");
     };
 
     return { addToCard };

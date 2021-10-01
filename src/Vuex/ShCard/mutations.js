@@ -1,7 +1,7 @@
 export default {
   addProd(state, payload) {
     state.price = +state.price + +payload.price;
-    console.log(payload);
+    // console.log(payload);
     state.prods.push(payload);
   },
   removeProd(state, payload) {
