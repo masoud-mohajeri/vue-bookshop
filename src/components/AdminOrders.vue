@@ -1,6 +1,6 @@
 <template>
-  <h2>Admin Orders</h2>
   <div class="body-orders-admin">
+    <h2 v-if="orders.length === 0">سفارشی موجود نیست</h2>
     <AdminOrdersItems v-for="order in orders" :order="order" :key="order.id" />
   </div>
 </template>

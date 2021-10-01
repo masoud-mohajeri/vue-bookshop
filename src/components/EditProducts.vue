@@ -1,6 +1,6 @@
 <template>
   <div class="body-edit-prod">
-    <h2>Edit Products</h2>
+    <h2 v-if="products.length === 0">کالایی موجود نیست</h2>
     <AdminProductCardEdit
       v-for="prod of products"
       :key="prod.id"

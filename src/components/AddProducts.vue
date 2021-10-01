@@ -1,6 +1,5 @@
 <template>
   <div class="body-add-prod">
-    <h2>Add Products</h2>
     <ProductForm @data="bookSaverHandler" />
   </div>
 </template>

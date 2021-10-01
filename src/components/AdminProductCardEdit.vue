@@ -11,11 +11,11 @@
               <h5 class="flex-items">نام کتاب : {{ book.name }}</h5>
               <h5 class="flex-items">قیمت : {{ book.price }}</h5>
               <h5 class="flex-items">نویسنده : {{ book.author }}</h5>
-              <h5 class="flex-items">خلاصه : {{ book.description }}</h5>
-              <ion-button fill="solid" color="primary" @click="editModeHandler"
-                >اصلاح</ion-button
-              >
             </div>
+            <!-- <h5>خلاصه : {{ book.description }}</h5> -->
+            <ion-button fill="solid" color="primary" @click="editModeHandler"
+              >اصلاح</ion-button
+            >
             <ProductForm
               editMode
               v-if="editMode"
@@ -100,7 +100,7 @@ export default defineComponent({
 }
 
 .flex-items {
-  width: 45%;
+  width: 100%;
   display: inline-block;
 }
 </style>

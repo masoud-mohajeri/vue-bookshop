@@ -66,6 +66,7 @@ export default defineComponent({
 <style scoped>
 .prods-body {
   padding: 15px;
+  padding-bottom: 55px;
 }
 @media (max-width: 811px) {
   .prods-body {

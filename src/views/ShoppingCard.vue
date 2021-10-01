@@ -22,7 +22,9 @@
           <ion-button type="submit" color="success">پرداخت</ion-button>
         </form>
         <!-- items in card  -->
-
+        <h2 v-if="store.getters.getCard.prods.length === 0">
+          کالایی در سبد نیست
+        </h2>
         <CardItem
           v-for="book of store.getters.getCard.prods"
           :book="book"
