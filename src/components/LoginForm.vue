@@ -143,7 +143,7 @@ export default defineComponent({
 });
 </script>
 
-<style >
+<style scoped >
 .body {
   width: 30%;
   margin: 45px auto;

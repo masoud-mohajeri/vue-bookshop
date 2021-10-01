@@ -34,7 +34,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .body-card-item {
   width: 100%;
   display: flex;

@@ -54,7 +54,7 @@ export default defineComponent({
 
 <style scoped>
 .image {
-  width: 240px;
+  width: 100%;
   height: 340px;
 }
 

@@ -102,6 +102,10 @@ export default {
         toast("لطفا آدرس را وارد کنید ");
         return;
       }
+      if (store.getters.getCard.prods.length === 0) {
+        toast("محصولی در سبد نیست !  ");
+        return;
+      }
       purchase(address.value);
     };
     return { deleteHandler, store, payCartHandler, address };

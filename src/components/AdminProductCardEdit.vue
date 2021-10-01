@@ -85,7 +85,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .prdcard-edit-body {
   padding: 10px;
   margin: 10px;
