@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar color="success">
-        <ion-title>کتابفروشی</ion-title>
+        <ion-title> 🎒 کتاب فروشی </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
@@ -126,7 +126,7 @@ export default {
   setup() {
     // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
     const slideOpts = {
-      initialSlide: 1,
+      initialSlide: 0,
       speed: 400,
       slidesPerView: 1,
       freeMode: false,

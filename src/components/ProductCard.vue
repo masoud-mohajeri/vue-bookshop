@@ -11,7 +11,7 @@
       <ion-button fill="solid" @click="addToCard">
         افزودن به سبد خرید
       </ion-button>
-      <ion-button fill="outline" color="success"> مشاهده جزعیات </ion-button>
+      <!-- <ion-button fill="outline" color="success"> مشاهده جزعیات </ion-button> -->
     </ion-card-content>
   </ion-card>
 </template>
@@ -61,7 +61,7 @@ export default defineComponent({
 }
 
 .body {
-  height: 520px;
+  height: 490px;
   width: 240px;
   display: inline-block;
   margin: 10px;

@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar color="success">
-        <ion-title>ورود</ion-title>
+        <ion-title> 🚪 ورود</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
