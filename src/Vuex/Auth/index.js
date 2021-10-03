@@ -1,5 +1,3 @@
-import mutation from './mutations';
-
 export const Auth = {
   state: () => ({
     Name: null,
@@ -7,7 +5,20 @@ export const Auth = {
     email: null,
     exist: false,
   }),
-  mutations: { ...mutation },
+  mutations: {
+    logedIn(state, payload) {
+      state.Name = payload.name;
+      state.role = payload.role;
+      state.email = payload.email;
+      state.exist = true;
+    },
+    logedOut(state) {
+      state.Name = null;
+      state.role = null;
+      state.email = null;
+      state.exist = false;
+    },
+  },
   actions: {},
   getters: {
     isAuth(state) {
